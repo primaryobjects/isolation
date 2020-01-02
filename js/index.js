@@ -1,8 +1,8 @@
 // Main React render hook.
 $(function() {
-  ReactDOM.render(
+  const isolationCtrl = ReactDOM.render(
     <div>
-      <Isolation width="3" height="3" strategy={ StrategyManager.minimax }></Isolation>
+      <IsolationContainer width="3" height="3"></IsolationContainer>
     </div>,
     document.getElementById('root')
   );

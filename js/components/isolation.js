@@ -1,67 +1,83 @@
 class Isolation extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       round: 1,
       playerIndex: props.playerIndex || 0,
       players: [ { x: props.player1x || -1, y: props.player1y || -1, moves: [{}] }, { x: props.player2x || -1, y: props.player2y || -1, moves: [{}] } ],
+      strategy: props.strategy,
     };
-
+    
     this.state.players[0].moves = IsolationManager.allMoves(0, this.state.players, props.width, props.height);
     this.state.players[1].moves = IsolationManager.allMoves(1, this.state.players, props.width, props.height);
-
+    
     this.grid = React.createRef();
     this.onGrid = this.onGrid.bind(this);
   }
-
+  
+  componentDidUpdate(nextProps) {
+   const { strategy } = this.props;
+   if (nextProps.strategy !== strategy) {
+    if (strategy) {
+     this.setState({ strategy });
+    }
+   }
+  }
+  
   onGrid(x, y, values) {
     const playerIndex = this.state.playerIndex;
     const players = this.state.players;
-
+    
     if (IsolationManager.isValidMove(x, y, playerIndex, players, values, this.grid.current.props.width, this.grid.current.props.height)) {
       // Update player position.
       players[playerIndex].x = x;
       players[playerIndex].y = y;
-
+      
       // Update the grid local variable with the player move (so available moves will be accurate).
       values[y][x] = playerIndex + 1;
-
+      
       // Update available moves for all players.
       players[0].moves = IsolationManager.availableMoves(0, players, values, this.grid.current.props.width, this.grid.current.props.height);
       players[1].moves = IsolationManager.availableMoves(1, players, values, this.grid.current.props.width, this.grid.current.props.height);
-
+      
       // Update cell value in the grid.
       this.grid.current.setValue(x, y, !playerIndex ? 'gray' : 'silver');
+
+      /*let tree = [];
+      if (playerIndex === 1) {
+        tree = StrategyManager.tree(!playerIndex ? 1 : 0, JSON.parse(JSON.stringify(players)), values, this.grid.current.props.width, this.grid.current.props.height);
+        StrategyManager.renderTree(tree);
+      }*/
 
       // Update state and play opponent's turn.
       this.setState({ round: this.state.round + 1, playerIndex: !playerIndex ? 1 : 0, players }, () => {
         if (this.state.playerIndex && this.state.players[this.state.playerIndex].moves.length > 0) {
-          if (this.props.strategy) {
+          if (this.state.strategy && this.state.strategy !== StrategyManager.none) {
           // AI turn.
           setTimeout(() => {
             const tree = StrategyManager.tree(playerIndex, JSON.parse(JSON.stringify(players)), values, this.grid.current.props.width, this.grid.current.props.height);
             StrategyManager.renderTree(tree);
 
             // Get the AI's move.
-            ({ x, y } = this.props.strategy(tree, this.state.playerIndex, this.state.players, values, this.grid.current.props.width, this.grid.current.props.height));
+            ({ x, y } = this.props.strategy(tree, this.state.playerIndex, this.state.players, values, this.grid.current.props.width, this.grid.current.props.height));            
             console.log(`AI is moving to ${x},${y}.`)
-
+            
             // Move the AI player.
             this.onGrid(x, y, values);
           }, 1000);
           }
         }
       });
-
+      
       return true;
     }
   }
-
+  
   render() {
     const moves = this.props.moves !== undefined ? this.props.moves : this.state.players[this.state.playerIndex].moves.length;
     const winnerIndex = this.state.playerIndex ? 1 : 2;
-
+    
     return (
       <div id='app' ref={ this.container }>
         <Grid width={ this.props.width } height={ this.props.height } grid={ this.props.grid } cellStyle={ this.props.cellStyle } players={ this.state.players } onClick={ this.onGrid } ref={ this.grid }>
@@ -79,7 +95,7 @@ class Isolation extends React.Component {
             <div class={ `badge badge-success ${!moves ? '' : 'd-none'}` }>Player { winnerIndex } wins!</div>
           </div>
         </div>
-
+        
         <div class='row'>
           <div class='col'>
             <div class='badge badge-secondary'>

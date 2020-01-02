@@ -30,8 +30,8 @@ class IsolationContainer extends React.Component {
           
         <div class="gamePlayOptions">
           <span>Game Play</span>
-          <input type="radio" name="type" value="random" checked={this.state.strategy === StrategyManager.random} onChange={ this.onType }/> <span>Random</span>
           <input type="radio" name="type" value="minimax" checked={this.state.strategy === StrategyManager.minimax} onChange={ this.onType }/> <span>Minimax</span>
+          <input type="radio" name="type" value="random" checked={this.state.strategy === StrategyManager.random} onChange={ this.onType }/> <span>Random</span>
           <input type="radio" name="type" value="none" checked={!this.state.strategy || this.state.strategy === StrategyManager.none} onChange={ this.onType }/> <span>2 Players</span>
         </div>
       </div>

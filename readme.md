@@ -11,6 +11,15 @@ Isolation offers a simple environment to demonstrate the artificial intelligence
 
 ![](images/isolation-2.png)
 
+## Running the Game Locally
+
+```bash
+cd isolation
+python -m SimpleHTTPServer 8000
+```
+
+Any http server may be used to host the game locally. An example of using the Python SimpleHTTPServer is shown above. Execute the above command from the directory containing the game. Then navigate to http://localhost:8000 to play the game.
+
 ## How to Play
 
 At each turn, the player may choose to move any number of spaces up, right, down, left, or diagonally as long as the path is not blocked by a previously visited cell.

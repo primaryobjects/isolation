@@ -46,8 +46,6 @@
   }
 }
 
-.gamePlayOptions {
-  span {
-    margin-right: 12px;
-  }
+.gamePlayOptions span {
+  margin-right: 12px;
 }

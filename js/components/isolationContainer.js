@@ -3,7 +3,7 @@ class IsolationContainer extends React.Component {
     super(props);
     
     this.state = {
-      strategy: props.strategy,
+      strategy: props.strategy || StrategyManager.minimax,
     };
     
     this.onType = this.onType.bind(this);

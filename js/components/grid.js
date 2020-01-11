@@ -16,11 +16,34 @@ class Grid extends React.Component {
     }
 
     this.state = {
-     values
+     values,
+     width: props.width,
+     height: props.height,
     };
 
     this.onClick = this.onClick.bind(this);
     this.setValue = this.setValue.bind(this);
+  }
+
+  componentDidUpdate(nextProps) {
+    const { width, height } = this.props;
+
+    // Reset the grid values when the width or height changes.
+    if ((width && nextProps.width !== width) || (height && nextProps.height !== height)) {
+      const values = [];
+      // Populate the grid values with zeros.
+      for (let y=0; y <= height; y++) {
+        const row = [];
+        for (let x=0; x <= width; x++) {
+          row.push(0);
+        }
+
+        values.push(row);
+      }
+
+      this.setState({ values, width, height });
+      console.log(`Reset grid to ${width},${height}`);
+    }
   }
 
   onClick(cell, x, y) {
@@ -40,9 +63,9 @@ class Grid extends React.Component {
 
   render() {
     const rows = [];
-    for (let y=0; y<this.props.height; y++) {
+    for (let y=0; y<this.state.height; y++) {
       const cols = []
-      for (let x=0; x<this.props.width; x++) {
+      for (let x=0; x<this.state.width; x++) {
         cols.push(
           <td>
             <Cell x={x} y={y} color={ this.state.values[y][x] } cellStyle={ this.props.cellStyle } onClick={ this.onClick }>

@@ -1,5 +1,5 @@
 const HeuristicManager = {
-  simple: function(playerMoves, opponentMoves) {
+  simple: function(playerMoves) {
     // Favor maximizing the number of available moves for the player.
     return playerMoves;
   },

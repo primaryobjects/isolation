@@ -8,6 +8,7 @@ class Isolation extends React.Component {
       players: [ { x: props.player1x || -1, y: props.player1y || -1, moves: [{}] }, { x: props.player2x || -1, y: props.player2y || -1, moves: [{}] } ],
       grid: props.grid,
       strategy: props.strategy,
+      heuristic: props.heuristic,
       width: props.width,
       height: props.height,
       treeDepth: props.treeDepth,
@@ -21,10 +22,15 @@ class Isolation extends React.Component {
   }
 
   componentDidUpdate(nextProps) {
-   const { strategy, width, height, treeDepth } = this.props;
-   if (strategy && nextProps.strategy !== strategy) {
-     this.setState({ strategy });
-   }
+    const { strategy, heuristic, width, height, treeDepth } = this.props;
+
+    if (strategy && nextProps.strategy !== strategy) {
+      this.setState({ strategy });
+    }
+
+    if (heuristic && nextProps.heuristic !== heuristic) {
+      this.setState({ heuristic });
+    }
 
     if (width && nextProps.width !== width) {
       this.setState({ width });
@@ -36,7 +42,7 @@ class Isolation extends React.Component {
 
     if (treeDepth && nextProps.treeDepth !== treeDepth) {
       this.setState({ treeDepth });
-}
+    }
   }
 
   onGrid(x, y, values) {
@@ -58,19 +64,13 @@ class Isolation extends React.Component {
       // Update cell value in the grid.
       this.grid.current.setValue(x, y, !playerIndex ? 'gray' : 'silver');
 
-      /*let tree = [];
-      if (playerIndex === 1) {
-        tree = StrategyManager.tree(!playerIndex ? 1 : 0, JSON.parse(JSON.stringify(players)), values, this.grid.current.props.width, this.grid.current.props.height);
-        StrategyManager.renderTree(tree);
-      }*/
-
       // Update state and play opponent's turn.
       this.setState({ round: this.state.round + 1, playerIndex: !playerIndex ? 1 : 0, players }, () => {
         if (this.state.playerIndex && this.state.players[this.state.playerIndex].moves.length > 0) {
           if (this.state.strategy && this.state.strategy !== StrategyManager.none) {
           // AI turn.
           setTimeout(() => {
-            const tree = StrategyManager.tree(playerIndex, JSON.parse(JSON.stringify(players)), values, this.grid.current.props.width, this.grid.current.props.height);
+            const tree = StrategyManager.tree(playerIndex, JSON.parse(JSON.stringify(players)), values, this.grid.current.props.width, this.grid.current.props.height, this.state.round, this.state.heuristic);
             StrategyManager.renderTree(tree, this.state.treeDepth);
 
             // Get the AI's move.

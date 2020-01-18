@@ -44,7 +44,7 @@ const StrategyManager = {
     };
 
     const maxValue = (node, alpha, beta) => {
-      console.log(`AlphaBeta-->MAX: Visited Node: ${toString(node)}`);
+      //console.log(`AlphaBeta-->MAX: Visited Node: ${toString(node)}`);
 
       if (isTerminal(node)) {
         return getUtility(node);
@@ -68,7 +68,7 @@ const StrategyManager = {
     };
 
     const minValue = (node, alpha, beta) => {
-      console.log(`AlphaBeta-->MIN: Visited Node: ${toString(node)}`);
+      //console.log(`AlphaBeta-->MIN: Visited Node: ${toString(node)}`);
 
       if (isTerminal(node)) {
         return getUtility(node);
@@ -110,16 +110,12 @@ const StrategyManager = {
     return bestState ? { x: bestState.players[bestState.activePlayer].x, y: bestState.players[bestState.activePlayer].y } : { x: 1, y: 1 };
   },
 
-  tree: function(playerIndex, players, values, width, height, maxDepth = 4) {
+  tree: function(playerIndex, players, values, width, height, round, heuristic, maxDepth = 4) {
     //playerIndex = 0; // Always use scores for human player.
     const referencePlayerIndex = !playerIndex ? 1 : 0; // Point-of-view for the player that the tree is calculated for. The root node will be from the opposing player.
+    console.log(round);
 
-    const heuristic = (playerMoves, opponentMoves) => {
-      // Use a herustic of (moves * 2) - opponent moves, thus maximizing the number of moves for the player while minimizing the number of moves for your opponent.
-      return (playerMoves * 2) - opponentMoves;
-    };
-
-    let root = { depth: 0, player: playerIndex, activePlayer: playerIndex, baseScore: players[referencePlayerIndex].moves.length, score: heuristic(players[referencePlayerIndex].moves.length, players[!referencePlayerIndex ? 1 : 0].moves.length), moves: players[referencePlayerIndex].moves, players, values, children: [], width, height };
+    let root = { depth: 0, player: playerIndex, activePlayer: playerIndex, baseScore: players[referencePlayerIndex].moves.length, score: heuristic(players[referencePlayerIndex].moves.length, players[!referencePlayerIndex ? 1 : 0].moves.length, width, height, round), moves: players[referencePlayerIndex].moves, players, values, children: [], width, height };
     let fringe = [ root ];
     let node = fringe.shift();
 
@@ -146,7 +142,7 @@ const StrategyManager = {
           const moves = IsolationManager.availableMoves(!newPlayerIndex ? 1 : 0, newPlayers, newValues, width, height);
 
           // Add the new node to our tree.
-          const child = { depth: node.depth + 1, player: playerIndex, activePlayer: newPlayerIndex, baseScore: movesReferencePlayer.length, score: heuristic(movesReferencePlayer.length, moves.length), moves, players: newPlayers, values: newValues, children: [] };
+          const child = { depth: node.depth + 1, player: playerIndex, activePlayer: newPlayerIndex, baseScore: movesReferencePlayer.length, score: heuristic(movesReferencePlayer.length, moves.length, width, height, round), moves, players: newPlayers, values: newValues, children: [] };
           node.children.push(child);
           fringe.push(child);
         });

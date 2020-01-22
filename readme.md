@@ -3,7 +3,9 @@ Isolation
 
 An AI browser-based game, where the goal is to be the last player with an available move.
 
-[Play Online](http://primaryobjects.github.io/isolation/) or [edit](https://codepen.io/primaryobjects/full/QWWGgmR) on CodePen.
+[Play Online](http://primaryobjects.github.io/isolation/)
+
+[Edit](https://codepen.io/primaryobjects/full/QWWGgmR) on CodePen
 
 Isolation offers a simple environment to demonstrate the artificial intelligence AI algorithm [Minimax](https://en.wikipedia.org/wiki/Minimax) with [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 

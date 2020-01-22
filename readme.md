@@ -5,8 +5,6 @@ An AI browser-based game, where the goal is to be the last player with an availa
 
 [Play Online](http://primaryobjects.github.io/isolation/)
 
-[Edit](https://codepen.io/primaryobjects/full/QWWGgmR) on CodePen
-
 Isolation offers a simple environment to demonstrate the artificial intelligence AI algorithm [Minimax](https://en.wikipedia.org/wiki/Minimax) with [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 
 ![](images/isolation-1.png)
@@ -43,6 +41,8 @@ Any http server may be used to host the game locally. An example of using the Py
 ## How is it Made?
 
 Isolation is developed with Javascript, React, Twitter Bootstrap.
+
+[Edit](https://codepen.io/primaryobjects/full/QWWGgmR) the code on CodePen.
 
 ## License
 

@@ -5,6 +5,10 @@ An AI browser-based game, where the goal is to be the last player with an availa
 
 [Play Online](http://primaryobjects.github.io/isolation/)
 
+[Intelligent Heuristics for the Game Isolation using AI and Minimax](http://www.primaryobjects.com/2020/01/26/intelligent-heuristics-for-the-game-isolation-using-ai-and-minimax/)
+
+## What is it?
+
 Isolation offers a simple environment to demonstrate the artificial intelligence AI algorithm [Minimax](https://en.wikipedia.org/wiki/Minimax) with [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 
 ![](images/isolation-1.png)

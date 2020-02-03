@@ -11,9 +11,7 @@ An AI browser-based game, where the goal is to be the last player with an availa
 
 Isolation offers a simple environment to demonstrate the artificial intelligence AI algorithm [Minimax](https://en.wikipedia.org/wiki/Minimax) with [Alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning).
 
-![](images/isolation-1.png)
-
-![](images/isolation-2.png)
+![Isolation - game using AI player with minimax and intelligent heuristics](images/isolation.png)
 
 ## How to Play
 
